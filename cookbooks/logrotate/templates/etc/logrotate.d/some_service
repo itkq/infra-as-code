@@ -1,0 +1,9 @@
+/var/log/some_service.log {
+    <%= node[:logrotate][:interval] %>
+    rotate <%= node[:logrotate][:rotate] %>
+    <% if node[:logrotate][:compress] %>compress<% end %>
+    <% if node[:logrotate][:delaycompress] %>delaycompress<% end %>
+    <% if node[:logrotate][:missingok] %>missingok<% end %>
+    <% if node[:logrotate][:notifempty] %>notifempty<% end %>
+    <% if node[:logrotate][:copytruncate] %>copytruncate<% end %>
+}
