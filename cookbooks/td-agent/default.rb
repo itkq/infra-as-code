@@ -9,16 +9,14 @@ execute 'Download GPG key of treasure data' do
   command 'curl -sL https://packages.treasuredata.com/GPG-KEY-td-agent | apt-key add -'
 end
 
-execute 'apt-get update' do
-  subscribes :run, 'template[/etc/apt/sources.list.d/treasure-data.list]'
-  action :nothing
-end
-
 template "/etc/apt/sources.list.d/treasure-data.list" do
+  notifies :nothing, 'execute[apt-get update]'
   owner 'root'
   group 'root'
   mode '644'
 end
+
+execute 'apt-get update'
 
 package 'td-agent' do
   version node[:td_agent][:version]
